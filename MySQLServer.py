@@ -26,7 +26,7 @@ except Error as e:
 
 try:
     cursor = connection.cursor()
-    cursor.execute("CREATE DATABASE alx_book_store")
+    cursor.execute("CREATE DATABASE IF NOT EXISTS alx_book_store")
     print("Database 'alx_store_created' successfully!")
 
     
