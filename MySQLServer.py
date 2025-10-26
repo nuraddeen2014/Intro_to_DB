@@ -22,18 +22,22 @@ try:
 except Error as e:
     print(f"Connection Error '({e})'")
 
-cursor = connection.cursor()
 
-cursor.execute("CREATE DATABASE IF NOT EXISTS alx_book_store")
 
-if cursor.rowcount>1:
+try:
+    cursor = connection.cursor()
+    cursor.execute("CREATE DATABASE alx_book_store")
     print("Database 'alx_store_created' successfully!")
 
-else:
-    print("Database exists")
+    
+except mysql.connector.Error as e:
+    print(f"Databse error: '{e}'")
 
-cursor.close()
-print("Cursor closed")
-
-connection.close()
-print("Connection closed")
+finally:
+    if 'cursor' in locals():
+        cursor.close()
+        print("Cursor closed")
+    
+    if connection.is_connected() and cursor:
+        connection.close()
+        print("Connection closed")
